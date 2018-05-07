@@ -1,6 +1,46 @@
 # Gnosis
 
-## Deploy server
+## Client
+
+Install required server dependencies:
+
+```
+$ npm install
+```
+
+### Develop client
+
+```
+$ npm start:client
+```
+
+### Build client
+
+```
+$ npm run build:client
+```
+
+### Deploy client
+
+To deploy client after it's built, use firebase tools to do it:
+
+```
+$ npm run deploy:client
+```
+
+## Server
+
+Install required server dependencies:
+
+```
+# Move into functions module
+$ cd src/gnosis/server/functions
+# Install dependencies
+$ npm install
+# .. Other modules here
+```
+
+### Deploy server
 
 This will build and deploy server configuration to firebase.
 
@@ -8,14 +48,14 @@ This will build and deploy server configuration to firebase.
 $ npm run deploy:server
 ```
 
-## Local server
+### Local server
 If you want to build the server locally, run this:
 
 ```
 # Transpile TS source to ES5
 $ npm run build:server
 # Run local server serving configuration from src/gnosis/server/*/lib
-$ firebase serve
+$ npm run start:server
 ```
 
 ## Database

@@ -11,11 +11,17 @@
     "tachyons": "^4.9.1"
   },
   "scripts": {
-    "start": "react-scripts-ts start",
-    "build": "react-scripts-ts build",
+    "start:client": "react-scripts-ts start",
+    "start:server": "firebase serve --only functions,database",
+    "build:client": "react-scripts-ts build",
     "build:server": "npm --prefix src/gnosis/server/functions run build",
+    "lint:client": "tslint",
     "lint:server": "npm --prefix src/gnosis/server/functions run lint",
-    "deploy:server": "firebase deploy",
+    "deploy:server": "firebase deploy --only functions,database",
+    "deploy:client": "firebase deploy --only hosting",
+    "start": "npm run start:client",
+    "build": "npm run build:client",
+    "lint": "npm run lint:client",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject"
   },
