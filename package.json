@@ -13,8 +13,9 @@
   "scripts": {
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
-    "build:server": "npm --prefix src/server/functions run build",
-    "lint:server": "npm --prefix src/server/functions run lint",
+    "build:server": "npm --prefix src/gnosis/server/functions run build",
+    "lint:server": "npm --prefix src/gnosis/server/functions run lint",
+    "deploy:server": "firebase deploy",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject"
   },

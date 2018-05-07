@@ -22,3 +22,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Server builds
+/src/gnosis/server/*/lib
+/src/gnosis/server/*/node_modules
