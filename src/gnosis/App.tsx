@@ -1,8 +1,81 @@
 import * as React from 'react';
 import * as cx from 'classnames';
 import {Camera, Mic, Globe} from 'react-feather';
+import {Subscribe, Container} from 'unstated';
 
 import logo from './logo.svg';
+
+interface IState {
+  command: ECommand;
+}
+
+enum ECommand {
+  'Intro',
+  'Record',
+  'Capture',
+  'Grow',
+  'ProcessPhoto',
+  'ProcessAudio',
+}
+
+class CommandContainer extends Container<IState> {
+  public state = {
+    command: ECommand.Grow,
+  };
+
+  // TODO: capturePhoto, etc.
+}
+
+const Command = () => (
+  <div className="ph5 pv7 tc">
+    <Subscribe to={[CommandContainer]}>
+      {command => {
+        switch (command.state.command) {
+          case ECommand.Intro:
+            return <CommandText text="Welcome to Gnosis." />;
+          case ECommand.Record:
+            return <CommandText text="Be our ears." />;
+          case ECommand.Capture:
+            return <CommandText text="Be our eyes." />;
+          case ECommand.ProcessAudio:
+            return <CommandText text="What do you hear?" />;
+          case ECommand.ProcessPhoto:
+            return <CommandText text="What do you see?" />;
+          case ECommand.Grow:
+            return <CommandText text="We all are Gnosis." />;
+          default:
+            return <CommandText text="Welcome to Gnosis." />;
+        }
+      }}
+    </Subscribe>
+  </div>
+);
+
+const CommandInput = () => (
+  <div className="w5 center">
+    <Subscribe to={[CommandContainer]}>
+      {command => {
+        switch (command.state.command) {
+          case ECommand.Intro:
+            return <InputMicrophone />;
+          // TODO: "Good to be here"
+          case ECommand.Record:
+            return <InputMicrophone />;
+          case ECommand.Capture:
+            return <InputCamera />;
+          case ECommand.ProcessAudio:
+            return <Input label="What do you hear?" placeholder="What do you hear?" />;
+          case ECommand.ProcessPhoto:
+            return <Input label="What do you see?" placeholder="What do you see?" />;
+          case ECommand.Grow:
+            return <InputGrow />;
+          default:
+            return <CommandText text="Welcome to Gnosis." />;
+        }
+      }}
+    </Subscribe>
+  </div>
+);
 
 class App extends React.Component {
   public render() {
@@ -14,15 +87,8 @@ class App extends React.Component {
             <h1 className="mt2 f5 tc">Gnosis</h1>
           </header>
           <main className="pt5 flex-auto">
-            <CommandContainer>
-              <CommandText text="Can you hear us?" />
-            </CommandContainer>
-            <InputContainer>
-              <Input label="Answer" placeholder="..." cls="mt5" />
-              <InputCamera />
-              <InputMicrophone />
-              <InputSpread />
-            </InputContainer>
+            <Command />
+            <CommandInput />
           </main>
         </div>
       </div>
@@ -38,13 +104,15 @@ const CommandText: React.StatelessComponent<ICommandText> = ({text}) => (
   <p className="f5 mv0 b lh-copy courier">{text}</p>
 );
 
-const CommandContainer: React.StatelessComponent = ({children}) => (
+/* const CommandContainer: React.StatelessComponent = ({children}) => (
   <div className="ph5 pv7 tc">{children}</div>
 );
+*/
 
-const InputContainer: React.StatelessComponent = ({children}) => (
+/*const InputContainer: React.StatelessComponent = ({children}) => (
   <div className="w5 center">{children}</div>
 );
+*/
 
 interface IInput {
   placeholder: string;
@@ -84,7 +152,7 @@ const InputCamera = () => (
     <div className="mr3">
       <Camera />
     </div>
-    <CommandText text="Be our eyes" />
+    <CommandText text="Capture" />
   </InputButton>
 );
 
@@ -93,16 +161,16 @@ const InputMicrophone = () => (
     <div className="mr3">
       <Mic />
     </div>
-    <CommandText text="Be our ears" />
+    <CommandText text="Record" />
   </InputButton>
 );
 
-const InputSpread = () => (
-  <InputButton label="Spread the appp">
+const InputGrow = () => (
+  <InputButton label="Grow the app's audience">
     <div className="mr3">
       <Globe />
     </div>
-    <CommandText text="Spread" />
+    <CommandText text="Grow" />
   </InputButton>
 );
 
