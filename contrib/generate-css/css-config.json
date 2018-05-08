@@ -1,0 +1,46 @@
+{
+  "typeScale": [
+    3, 2.25, 1.5, 1.25, 1, 0.875
+  ],
+  "spacing": [2, 4, 6, 8, 16, 32],
+  "lineHeight": [1, 1.25, 1.5],
+  "customMedia": [
+    { "m": 48 },
+    { "l": 64 }
+  ],
+  "colors": {
+    "violet": "#4f4c8b",
+    "red": "#f55d60",
+    "dark-red": "#450b08",
+    "orchid": "#e4c1e8",
+    "black": "#000",
+    "near-black": "#111",
+    "dark-gray": "#333",
+    "mid-gray": "#555",
+    "gray": "#777",
+    "silver": "#999",
+    "light-silver": "#aaa",
+    "moon-gray": "#ccc",
+    "light-gray": "#eee",
+    "near-white": "#f4f4f4",
+    "white": "#fff",
+    "orange": "#f3a801",
+    "gold": "#f2c800"
+  },
+  "nested": {
+    "links": ["dark-red", "red"]
+  },
+  "borderWidths": [0, 0.125, 0.25, 0.5, 1, 2],
+  "borderRadius": [0, 0.125, 0.25, 0.5, 1],
+  "widths": [1, 2, 4, 8, 16],
+  "maxWidths": [1, 2, 4, 8, 16, 32, 48, 64, 96],
+  "heights": [1, 2, 4, 8, 16],
+  "tables": {
+    "striped": ["light-silver", "moon-gray", "light-gray", "near-white"],
+    "stripe": ["light", "dark"]
+  },
+  "typography":{
+    "measure": [30, 34, 20]
+  },
+  "opacity": [1, 0.7, 0.4, 0.1, 0]
+}
