@@ -23,13 +23,17 @@ class CommandContainer extends Container<IState> {
     command: ECommand.Grow,
   };
 
+  public issueCommand(command: ECommand) {
+    this.setState({command});
+  }
+
   // TODO: capturePhoto, etc.
 }
 
 const Command = () => (
   <div className="ph5 pv7 tc">
     <Subscribe to={[CommandContainer]}>
-      {command => {
+      {(command: CommandContainer) => {
         switch (command.state.command) {
           case ECommand.Intro:
             return <CommandText text="Welcome to Gnosis." />;
@@ -64,9 +68,9 @@ const CommandInput = () => (
           case ECommand.Capture:
             return <InputCamera />;
           case ECommand.ProcessAudio:
-            return <Input label="What do you hear?" placeholder="What do you hear?" />;
+            return <InputText label="What do you hear?" placeholder="..." />;
           case ECommand.ProcessPhoto:
-            return <Input label="What do you see?" placeholder="What do you see?" />;
+            return <InputText label="What do you see?" placeholder="..." />;
           case ECommand.Grow:
             return <InputGrow />;
           default:
@@ -89,12 +93,32 @@ class App extends React.Component {
           <main className="pt5 flex-auto">
             <Command />
             <CommandInput />
+            <div className="pt6 w5 center">
+              <p className="f5 lh-copy mt0 mb3 tc">God mode: active</p>
+              <DebugView />
+            </div>
           </main>
         </div>
       </div>
     );
   }
 }
+
+const DebugView = () => (
+  <Subscribe to={[CommandContainer]}>
+    {(command: CommandContainer) => (
+      <ul className="DebugView list pl0 flex flex-row flex-wrap justify-center items-center">
+        {mapEnum(ECommand, c => (
+          <li key={c} className="mr2 w2">
+            <InputButton label={c} onClick={() => command.issueCommand(c)}>
+              X
+            </InputButton>
+          </li>
+        ))}
+      </ul>
+    )}
+  </Subscribe>
+);
 
 interface ICommandText {
   text: string;
@@ -120,11 +144,14 @@ interface IInput {
   cls?: string;
 }
 
-const Input: React.StatelessComponent<IInput> = ({children, placeholder, label, cls}) => (
+const InputText: React.StatelessComponent<IInput> = ({children, placeholder, label, cls}) => (
   <input
     aria-label={label}
     placeholder={placeholder}
-    className={cx('input-reset db center pa3 bg-transparent bn bb b--near-black near-black', cls)}
+    className={cx(
+      'input-reset db center pa3 bg-transparent bn bb b--near-black hover-b--red transition-border near-black tc',
+      cls,
+    )}
   />
 );
 
@@ -138,7 +165,7 @@ const InputButton: React.StatelessComponent<IInputButton> = ({children, label, c
   <button
     aria-label={label}
     className={cx(
-      'w-100 input-reset pa3 ba b--near-black flex flex-row justify-center items-center',
+      'w-100 input-reset pa3 ba b--near-black hover-b--red transition-border flex flex-row justify-center items-center',
       cls,
     )}
     onClick={onClick}
@@ -173,5 +200,23 @@ const InputGrow = () => (
     <CommandText text="Grow" />
   </InputButton>
 );
+
+// Enum mapping
+// @see: https://stackoverflow.com/questions/41308123/map-typescript-enum
+// you can't use "enum" as a type, so use this.
+interface IEnum {
+  [s: number]: string;
+}
+
+function mapEnum(enumerable: IEnum, fn: (e: any) => any): any[] {
+  // get all the members of the enum
+  const enumMembers: any[] = Object.keys(enumerable).map(key => enumerable[key]);
+
+  // we are only interested in the numeric identifiers as these represent the values
+  const enumValues: number[] = enumMembers.filter(v => typeof v === 'number');
+
+  // now map through the enum values
+  return enumValues.map(m => fn(m));
+}
 
 export default App;

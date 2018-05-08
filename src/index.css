@@ -665,6 +665,8 @@ code, .code { font-family: Consolas, monaco, monospace; }
 .hover-violet:hover { color: #4f4c8b; }
 .hover-red:focus { color: #f55d60; }
 .hover-red:hover { color: #f55d60; }
+.hover-b--red:focus { border-color: #f55d60; }
+.hover-b--red:hover { border-color: #f55d60; }
 .hover-dark-red:focus { color: #450b08; }
 .hover-dark-red:hover { color: #450b08; }
 .hover-orchid:focus { color: #e4c1e8; }
@@ -1968,4 +1970,7 @@ img { max-width: 100%; }
  .w-third-l { width: calc( 100% / 3 ); }
  .w-two-thirds-l { width: calc( 100% / 1.5 ); }
  .w-auto-l { width: auto; }
+}
+.transition-border {
+  transition: border-color .25s ease-in-out;
 }
