@@ -175,21 +175,23 @@ const InputButton: React.StatelessComponent<IInputButton> = ({children, label, c
 );
 
 const InputCamera = () => (
-  <InputButton label="Take Photo">
+  <label className="FileContainer w-100 input-reset pa3 ba b--near-black hover-b--red transition-border flex flex-row justify-center items-center">
     <div className="mr3">
       <Camera />
     </div>
+    <input type="file" accept="image/*" />
     <CommandText text="Capture" />
-  </InputButton>
+  </label>
 );
 
 const InputMicrophone = () => (
-  <InputButton label="Capture Audio">
+  <label className="FileContainer w-100 input-reset pa3 ba b--near-black hover-b--red transition-border flex flex-row justify-center items-center">
     <div className="mr3">
       <Mic />
     </div>
+    <input type="file" accept="audio/*" />
     <CommandText text="Record" />
-  </InputButton>
+  </label>
 );
 
 const InputGrow = () => (
