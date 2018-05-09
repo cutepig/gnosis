@@ -1,8 +1,10 @@
 import * as React from 'react';
 import * as cx from 'classnames';
+import Typist from 'react-typist';
 import {Camera, Mic, Globe} from 'react-feather';
 import {Subscribe, Container} from 'unstated';
 
+import 'gnosis/css/Typist.css';
 import logo from './logo.svg';
 
 interface IState {
@@ -20,7 +22,7 @@ enum ECommand {
 
 class CommandContainer extends Container<IState> {
   public state = {
-    command: ECommand.Grow,
+    command: ECommand.Intro,
   };
 
   public issueCommand(command: ECommand) {
@@ -30,25 +32,37 @@ class CommandContainer extends Container<IState> {
   // TODO: capturePhoto, etc.
 }
 
-const Command = () => (
+interface ICommand {
+  render: {
+    intro: () => React.ReactElement<{}>;
+    record: () => React.ReactElement<{}>;
+    capture: () => React.ReactElement<{}>;
+    processAudio: () => React.ReactElement<{}>;
+    processPhoto: () => React.ReactElement<{}>;
+    grow: () => React.ReactElement<{}>;
+    default: () => React.ReactElement<{}>;
+  };
+}
+
+const Command: React.StatelessComponent<ICommand> = ({render}) => (
   <div className="ph5 pv7 tc">
     <Subscribe to={[CommandContainer]}>
       {(command: CommandContainer) => {
         switch (command.state.command) {
           case ECommand.Intro:
-            return <CommandText text="Welcome to Gnosis." />;
+            return render.intro();
           case ECommand.Record:
-            return <CommandText text="Be our ears." />;
+            return render.record();
           case ECommand.Capture:
-            return <CommandText text="Be our eyes." />;
+            return render.capture();
           case ECommand.ProcessAudio:
-            return <CommandText text="What do you hear?" />;
+            return render.processAudio();
           case ECommand.ProcessPhoto:
-            return <CommandText text="What do you see?" />;
+            return render.processPhoto();
           case ECommand.Grow:
-            return <CommandText text="We all are Gnosis." />;
+            return render.grow();
           default:
-            return <CommandText text="Welcome to Gnosis." />;
+            return render.default();
         }
       }}
     </Subscribe>
@@ -61,8 +75,7 @@ const CommandInput = () => (
       {command => {
         switch (command.state.command) {
           case ECommand.Intro:
-            return <InputMicrophone />;
-          // TODO: "Good to be here"
+            return <InputBegin />;
           case ECommand.Record:
             return <InputMicrophone />;
           case ECommand.Capture:
@@ -74,7 +87,7 @@ const CommandInput = () => (
           case ECommand.Grow:
             return <InputGrow />;
           default:
-            return <CommandText text="Welcome to Gnosis." />;
+            return null;
         }
       }}
     </Subscribe>
@@ -91,7 +104,17 @@ class App extends React.Component {
             <h1 className="mt2 f5 tc">Gnosis</h1>
           </header>
           <main className="pt5 flex-auto">
-            <Command />
+            <Command
+              render={{
+                intro: () => <CommandText id="1" text="Welcome to Gnosis." />,
+                record: () => <CommandText id="2" text="Be our ears." />,
+                capture: () => <CommandText id="3" text="Be our eyes." />,
+                processAudio: () => <CommandText id="4" text="What do you hear?" />,
+                processPhoto: () => <CommandText id="5" text="What do you see?" />,
+                grow: () => <CommandText id="6" text="All will be part of Gnosis." />,
+                default: () => <CommandText id="7" text="Welcome to Gnosis." />,
+              }}
+            />
             <CommandInput />
             <div className="pt6 w5 center">
               <p className="f5 lh-copy mt0 mb3 tc">God mode: active</p>
@@ -122,9 +145,16 @@ const DebugView = () => (
 
 interface ICommandText {
   text: string;
+  id?: string;
 }
 
-const CommandText: React.StatelessComponent<ICommandText> = ({text}) => (
+const CommandText: React.StatelessComponent<ICommandText> = ({text, id}) => (
+  <p className="f5 mv0 b lh-copy courier">
+    <Typist key={id}>{text}</Typist>
+  </p>
+);
+
+const ActionText: React.StatelessComponent<ICommandText> = ({text}) => (
   <p className="f5 mv0 b lh-copy courier">{text}</p>
 );
 
@@ -180,7 +210,7 @@ const InputCamera = () => (
       <Camera />
     </div>
     <input type="file" accept="image/*" />
-    <CommandText text="Capture" />
+    <ActionText text="Capture" />
   </label>
 );
 
@@ -190,7 +220,7 @@ const InputMicrophone = () => (
       <Mic />
     </div>
     <input type="file" accept="audio/*" />
-    <CommandText text="Record" />
+    <ActionText text="Record" />
   </label>
 );
 
@@ -199,7 +229,13 @@ const InputGrow = () => (
     <div className="mr3">
       <Globe />
     </div>
-    <CommandText text="Grow" />
+    <ActionText text="Grow" />
+  </InputButton>
+);
+
+const InputBegin = () => (
+  <InputButton label="Sign up for Gnosis">
+    <ActionText text="Begin" />
   </InputButton>
 );
 

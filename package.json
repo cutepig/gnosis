@@ -11,6 +11,7 @@
     "react-feather": "^1.1.0",
     "react-router-dom": "^4.2.2",
     "react-scripts-ts": "2.15.1",
+    "react-typist": "^2.0.4",
     "tachyons": "^4.9.1",
     "unstated": "^2.0.3"
   },

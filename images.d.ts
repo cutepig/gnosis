@@ -2,6 +2,13 @@ declare module '*.svg';
 declare module '*.png';
 declare module '*.jpg';
 
+declare module 'react-typist' {
+  import {ComponentType} from 'react';
+
+  const Typist: ComponentType<{}>;
+  export default Typist;
+}
+
 declare module 'react-feather' {
   import {ComponentType, SVGAttributes} from 'react';
 
