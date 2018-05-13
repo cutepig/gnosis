@@ -3,18 +3,24 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/classnames": "^2.2.3",
+    "classnames": "^2.2.5",
     "firebase": "^4.13.1",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
+    "react-feather": "^1.1.0",
     "react-router-dom": "^4.2.2",
     "react-scripts-ts": "2.15.1",
-    "tachyons": "^4.9.1"
+    "react-typist": "^2.0.4",
+    "tachyons": "^4.9.1",
+    "unstated": "^2.0.3"
   },
   "scripts": {
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
-    "eject": "react-scripts-ts eject"
+    "eject": "react-scripts-ts eject",
+    "generate-styles": "node contrib/generate-css/index.js"
   },
   "devDependencies": {
     "@types/jest": "^22.2.3",
@@ -24,6 +30,7 @@
     "@types/react-router-dom": "^4.2.6",
     "firebase-tools": "^3.18.4",
     "prettier": "^1.12.1",
+    "tachyons-generator": "^0.22.1",
     "typescript": "^2.8.3"
   }
 }
